@@ -1,0 +1,53 @@
+<html>
+<head>
+<!-- *******************************
+
+Var Listener Example and Usage
+
+******************************* -->
+<script src="var-listener.js"></script>
+</head>
+<body>
+	<div id='app'></div>
+<script>
+
+
+var app = document.getElementById('app');
+
+/* Create a test object */
+window.test = {
+	stuff: "some stuff",
+	things: {
+	    dad: "some dad stuff",
+	}
+}
+
+
+/* simulate a later loading child of the origi nal object */
+setTimeout(function(){
+	test.things.moreDad = "DELAYED CONTENT"; // adds the "moreDad" variable to the test.things namespace
+},3000);
+
+
+/* create our listener */
+var listener = addVarListener("test", window, function(value){
+
+    app.innerHTML += "<span>" + value.stuff + "</span><br>";
+
+}).nest("things", function(value){ // we are nesting another layer deep, listening for test.things
+
+    app.innerHTML += "<span>" + value.dad + "</span><br>";
+
+}).nest("moreDad", function(value){ // finally we next our delayed variable, listening for test.things.moreDad
+
+    app.innerHTML += "<span>" + value + "</span><br>";
+
+    console.log(listener.exists()); // returns true if the above listeners have completed.
+
+});
+
+
+console.log(listener.exists()); // returns true if the above listeners have completed.
+</script>
+</body>
+</html>

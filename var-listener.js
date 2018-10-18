@@ -14,7 +14,7 @@ window.addVarListener = (function(varName, namespace, func) {
 
         namespace: namespace,
 
-        callback: func,
+        callback: func || function(value){},
 
         loopTime: 100,
 
@@ -30,6 +30,9 @@ window.addVarListener = (function(varName, namespace, func) {
         nest: function(varName, func) {
 
             _this = this;
+
+            func = func || function(value){};
+
             _this.callback = func;
             _this.namespace = _this.namespace[_this.varName];
             _this.varName = varName;

@@ -30,15 +30,7 @@ setTimeout(function(){
 
 
 /* create our listener */
-var listener = addVarListener("test", window, function(value){
-
-    app.innerHTML += "<span>" + value.stuff + "</span><br>";
-
-}).nest("things", function(value){ // we are nesting another layer deep, listening for test.things
-
-    app.innerHTML += "<span>" + value.dad + "</span><br>";
-
-}).nest("moreDad", function(value){ // finally we next our delayed variable, listening for test.things.moreDad
+var listener = addVarListener("test", window).nest("things").nest("moreDad", function(value){ // finally we next our delayed variable, listening for test.things.moreDad
 
     app.innerHTML += "<span>" + value + "</span><br>";
 
